@@ -1,0 +1,128 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Kodchasan" rel="stylesheet">
+</head>
+<input name="timeBox" class="timeBoxClass" type="text" placeholder="please write the time"/>
+<p>
+<span class="originalClass">The time is</span> <br /><span class="timeClass"></span>
+ <span class="spanClass"></span></p>
+<button class="buttonClass" onClick="stringifyTime()">Read the Time</button>
+<script>
+var hourArray = [
+  ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","00"],
+  ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"]
+]
+
+var minutesArrayTens = [
+  ["1", "2","3","4","5","0"],
+  [" ", "twenty", "thirty", "forty","fifty", "oh"]
+]
+
+var catchTeens = [
+  ["1","2","3","4","5","6","7","8","9"],
+  ["eleven", "twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"],
+  ]
+
+function stringifyTime(){
+  $(".timeClass").text(" ");
+  var test = $(".timeBoxClass").val();
+  var whatTime = $(".timeClass");
+  var spanClass = $(".spanClass");
+
+if ((test.length == "4") || (test.length == "5")) {
+    var timeTest = test.split(":");
+    var hourTest = timeTest[0];
+    var minuteTest = timeTest[1];
+
+
+    hourTest = checkIfAMOrPM(hourTest, spanClass)
+      console.log(hourTest)
+      console.log(typeof(hourTest))
+    setTheHours(hourArray, hourTest, whatTime);
+
+    var minuteTensTest = minuteTest[0];
+    var minuteOnesTest = minuteTest[1];
+
+    setTheMinutes(minuteTensTest,hourArray,catchTeens,minutesArrayTens,minuteOnesTest, whatTime)
+      } else {
+      alert("Please enter a number in the following format: 3:03");
+      }
+}
+//$(".buttonClass").on("click", t(evt))
+
+function checkIfAMOrPM(hourTest, spanClass) {
+  if (Number(hourTest) > 12) {
+    spanClass.text(" pm");
+    hourTest = (Number(hourTest) - 12).toString();
+  } else if (hourTest == "00") {
+    hourTest = "12";
+    spanClass.text(" am");
+  } else {
+    spanClass.text(" am");
+  }
+
+  return hourTest;
+}
+
+function setTheHours(hourArray, hourTest, whatTime) {
+  if (hourTest[0] == "0") {
+    hourTest = hourTest[1];
+  }
+  $(hourArray[0]).each(function(i,e){
+    if(hourTest == e) {
+      whatTime.append(" " + hourArray[1][i]);
+    }
+  })
+}
+
+function setTheMinutes(minuteTensTest,hourArray,catchTeens,minutesArrayTens,minuteOnesTest, whatTime) {
+        if (minuteTensTest == "1") {
+          $(hourArray[0]).each(function(i,e){
+            if(minuteOnesTest.indexOf(e) > -1){
+              whatTime.append(" " + catchTeens[1][i]);
+            }
+          })
+        }
+         else {
+        $(minutesArrayTens[0]).each(function(i,e){
+          if(minuteTensTest.indexOf(e) > -1){
+            whatTime.append(" " + minutesArrayTens[1][i]);
+          }
+        })
+        $(catchTeens[0]).each(function(i,e){
+          if(minuteOnesTest.indexOf(e) > -1){
+            whatTime.append(" " + hourArray[1][i]);
+          }
+        })
+      }
+    }
+
+</script>
+
+<style>
+.timeClass {
+  color: #B5838D;
+}
+.spanClass, .originalClass {
+  color: #6D6875;
+}
+
+body {
+  background-color: #F7E0DB;
+  text-align: center;
+  font-family: 'Kodchasan', sans-serif;
+  font-size: 55px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.buttonClass, input {
+  font-size: 35px;
+    background-color: black;
+    color: white;
+    font-family: 'Kodchasan', sans-serif;
+    text-align: center;
+}
+</style>
+</html>
