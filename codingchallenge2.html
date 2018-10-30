@@ -1,0 +1,78 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Kodchasan" rel="stylesheet">
+</head>
+<input name="cipherPassword" class="cipherPassword" type="text" placeholder="please enter your password"/>
+<input name="cipherNumber" class="cipherNumber" type="text" placeholder="pick a number between 1 and 25"/>
+<p>
+<span class="originalClass">Your Cipher is:</span></span> <br /><span class="cipherClass"></span>
+<span class="resultClass"></span>
+</p>
+<button class="buttonClass" onClick="stringifyCipher()">Convert the Cipher</button>
+<script>
+
+function stringifyCipher(){
+  var alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+                      "k", "l", "m", "n", "o", "p", "q", "r", "s",
+                    "t",  "u", "v", "w", "x", "y", "z"]
+  var cipherNum = Number($(".cipherNumber").val());
+  var cipherString = $(".cipherPassword").val().toLowerCase().split("");
+  var newCipher = "";
+
+  // $(alphabetArray).each(function(i,e){
+  //   $(cipherString.split("")).each(function(){
+  //     if (e == this) {
+        // if ((i-cipherNum) < 0 ) {
+        //   var q = (25 + i);
+        //   newCipher += alphabetArray[(q-cipherNum+1)];
+        // } else {
+        //   newCipher += alphabetArray[(i-cipherNum)];
+        // }
+  //     }
+  //   })
+  // })
+
+  for (var i in cipherString) {
+    for (var e in alphabetArray) {
+      if (alphabetArray[e] == cipherString[i]){
+        if ((Number(e)-cipherNum) < 0 ) {
+          var q = (26 + Number(e));
+          newCipher += alphabetArray[(q-cipherNum)];
+        } else {
+          newCipher += alphabetArray[(e-cipherNum)];
+        }
+      }
+    }
+  }
+  $(".resultClass").text(newCipher);
+}
+
+</script>
+
+<style>
+.cipherClass {
+  color: #B5838D;
+}
+.spanClass, .originalClass {
+  color: #6D6875;
+}
+
+body {
+  background-color: #F7E0DB;
+  text-align: center;
+  font-family: 'Kodchasan', sans-serif;
+  font-size: 55px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.buttonClass, input {
+  font-size: 35px;
+    background-color: black;
+    color: white;
+    font-family: 'Kodchasan', sans-serif;
+    text-align: center;
+}
+</style>
+</html>
